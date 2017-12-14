@@ -22,15 +22,20 @@ class LoginScreen extends React.Component {
     }
 
     render() {
+        if(!this.props.visible) return null;
+
         return (
             <form onSubmit={this.handleSubmit}>
-                <label>
-                    Select a username:
-                <input type="text" value={this.state.value} onChange={this.handleChange} />
-                </label>
+                <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Select a username"/>
                 <input type="submit" value="Submit" />
             </form>
         );
+    }
+}
+
+function mapStateToProps(state) {
+    return {
+        visible: state.userName === ""
     }
 }
 
@@ -38,4 +43,4 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ ...loginActions }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(LoginScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
