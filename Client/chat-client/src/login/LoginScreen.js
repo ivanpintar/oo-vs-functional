@@ -2,6 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as loginActions from './loginActions'
+import { InputGroup, FormControl, Button } from 'react-bootstrap'
 
 class LoginScreen extends React.Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class LoginScreen extends React.Component {
 
         this.state = { value: '' }
         this.handleChange = this.handleChange.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -21,21 +23,31 @@ class LoginScreen extends React.Component {
         event.preventDefault();
     }
 
+    handleKeyPress(event) {
+        if(event.key === 'Enter') {
+            this.handleSubmit(event);
+        }
+    }
+
     render() {
         if(!this.props.visible) return null;
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <input type="text" value={this.state.value} onChange={this.handleChange} placeholder="Select a username"/>
-                <input type="submit" value="Submit" />
-            </form>
+            <div className="well">
+                <InputGroup>
+                    <FormControl type="text" value={this.state.value} onChange={this.handleChange} placeholder="Enter a username to login" onKeyPress={this.handleKeyPress} />
+                    <InputGroup.Button>
+                        <Button onClick={this.handleSubmit}>Login</Button>
+                    </InputGroup.Button>
+                </InputGroup>
+            </div>
         );
     }
 }
 
 function mapStateToProps(state) {
     return {
-        visible: state.userName === ""
+        visible: state.currentUser === ""
     }
 }
 

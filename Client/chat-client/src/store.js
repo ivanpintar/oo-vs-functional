@@ -1,15 +1,19 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import logger from 'redux-logger'
 import rootReducer from './app/appReducer'
+import rootEpic from './app/appEpic'
 import { State } from './models' 
 import { List } from 'immutable'
+import { createEpicMiddleware } from 'redux-observable'
+import 'rxjs';
 
 const initialState = new State({
-    userName: 'test',
+    currentUser: '',
     chats: List()
 });
 const enhancers = []
 const middleware = [
+    createEpicMiddleware(rootEpic),
     logger
 ]
 

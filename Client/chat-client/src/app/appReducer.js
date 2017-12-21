@@ -4,6 +4,6 @@ import chatListReducer from '../chatContainer/chatList/chatListReducer'
 import { State } from '../models'
 
 export default combineReducers({
-    userName: loginReducer,
+    currentUser: loginReducer,
     chats: chatListReducer
 }, State)

@@ -3,15 +3,22 @@ import { connect } from 'react-redux'
 import ChatList from './chatList/ChatList'
 import Chat from './chat/Chat'
 
-const ChatContainer = (props) => {
-    if(!props.visible) return null;
+const ChatContainer = ({visible, currentUser}) => {
+    if(!visible) return null;
 
-    return <div><ChatList /><Chat /></div>
+    return (
+        <div>
+            <div style={{padding: '10px'}}>Logged in as: {currentUser}</div>
+            <ChatList />
+            <Chat />
+        </div>
+    )
 }
 
 function mapStateToProps(state) {
     return {
-        visible: state.userName !== ""
+        visible: state.currentUser !== "",
+        currentUser: state.currentUser
     }
 }
 

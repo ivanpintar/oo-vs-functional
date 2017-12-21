@@ -1,11 +1,7 @@
-function createAction(type, name) {
-    return { type, name }
-}
-
-export function addChatAction(name) {
-    return createAction('CHAT.LIST.ADD', name)
-}
-
-export function selectChatAction(name) {
-    return createAction('CHAT.LIST.SELECT', name)
-}
+const createAction = (type, name) => ({ type, name })
+export const chatsLoadedAction = (chats) => ({type: 'CHAT.LIST.LOADED', chats})
+export const createChatAction = (name) => createAction('CHAT.LIST.CREATE_CHAT', name)
+export const chatCreatedAction = (name) => createAction('CHAT.LIST.CHAT_CREATED', name)
+export const chatExistsAction = (name) => createAction('CHAT.LIST.CHAT_EXISTS', name)
+export const selectChatAction = (name) => createAction('CHAT.LIST.SELECT_CHAT', name)
+export const chatSelectedAction = (name) => createAction('CHAT.LIST.CHAT_SELECTED', name)

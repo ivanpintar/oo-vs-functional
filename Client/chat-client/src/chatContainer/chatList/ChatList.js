@@ -2,15 +2,22 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as chatListActions from './chatListActions'
-import AddChat from './AddChat'
+import CreateChat from './CreateChat'
+import { Button, ButtonToolbar } from 'react-bootstrap'
 
-const ChatList = ({chats, addChatAction, selectChatAction}) => {
+const ChatList = ({chats, createChatAction, selectChatAction}) => {
 
-    const createChatName = (c) => <button key={c.name} onClick={() => selectChatAction(c.name)}>{c.name}</button>;
+    const createChatName = (c) => <Button key={c.name}  onClick={() => selectChatAction(c.name)}>{c.name}</Button>
     const chatNames = chats.map(createChatName);    
 
-    return [ <div key="chatNames">{chatNames}</div>, 
-             <AddChat key="addChat" addChatAction={addChatAction}/> ]
+    return (
+        <div> 
+            <div className="well">
+                <CreateChat createChatAction={createChatAction}/>
+                <ButtonToolbar style={{ padding: '10px 0' }}>{chatNames}</ButtonToolbar>
+            </div>
+        </div>    
+    )
 }
 
 function mapStateToProps(state) {
