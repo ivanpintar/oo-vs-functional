@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aspnet/signalr-client": "^1.0.0-alpha2-final",
     "immutable": "^3.8.2",
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
