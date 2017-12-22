@@ -15,8 +15,8 @@ namespace PinetreeChat.WebAPI.Controllers
         public LoginController()
         {
             _loginService = CreateLoginService();
-        }
-        
+        }        
+
         [HttpPost]
         [Route("api/login")]
         public IActionResult Login([FromBody]LoginDTO loginDto)

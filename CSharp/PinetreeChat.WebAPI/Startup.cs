@@ -24,6 +24,7 @@ namespace PinetreeChat.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc();
             services.AddSignalR();
         }
@@ -36,6 +37,13 @@ namespace PinetreeChat.WebAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(builder =>
+            {
+                builder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
+            });
             app.UseMvc();
             app.UseSignalR(routes => routes.MapHub<ChatHub>("chatHub"));
         }

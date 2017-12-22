@@ -12,5 +12,5 @@ export default (action$) =>
                 .map(response => {
                     return loggedInAction(a.username)
                 })
-                // .catch(error => Observable.of(userExistsAction(a.username)))
+                .catch(error => Observable.of(userExistsAction(a.username)))
         })
