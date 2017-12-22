@@ -16,17 +16,20 @@ export default function chatListReducer(chatList = List(), action) {
     
     switch(action.type) {  
         case 'CHAT.LIST.LOADED':  
-            return action.chats.map(c => new Chat({
+            return List(action.chats.map(c => new Chat({
                 name: c.name,
                 selected: false,
                 loaded: false,
                 messages: List(),
                 participants: List(),
-            }))
+            })))
         case 'CHAT.LIST.CHAT_CREATED': 
             return chatList.push(new Chat({
                 name: action.name,
-                selected: false
+                selected: false,
+                loaded: false,
+                messages: List(),
+                participants: List(),
             }));
         case 'CHAT.LIST.CHAT_EXISTS':
             alert('Chat "' + action.name + '" already exists');
