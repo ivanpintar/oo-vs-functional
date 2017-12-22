@@ -1,20 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app/App';
+import registerSignalR from './signalr'
+import store from './store';
 
 const root = document.getElementById('root')
-window.constants = {
-    apiUrl: 'http://localhost:63081/'
-}
 
-ReactDOM.render(<App />, root);
-
-if (module.hot) {
-    module.hot.accept('./app/App', () => {
-        const NextApp = require('./app/App').default
-        ReactDOM.render(
-            <NextApp />,
-            root
-        )
-    })
-}
+registerSignalR(store, () => ReactDOM.render(<App />, root))

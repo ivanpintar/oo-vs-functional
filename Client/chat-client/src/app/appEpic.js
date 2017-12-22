@@ -1,10 +1,10 @@
 import { combineEpics } from 'redux-observable'
 import chatEpic from '../chatContainer/chat/chatEpic'
 import chatListEpic from '../chatContainer/chatList/chatListEpic'
-import loginEpic from '../login/loginEpic'
+import userEpic from '../user/userEpic'
 
 export default combineEpics(
     chatEpic,
-    loginEpic,
+    userEpic,
     chatListEpic
 )

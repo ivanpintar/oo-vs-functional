@@ -10,6 +10,7 @@ using System;
 using PinetreeChat.WebAPI.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.SignalR;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,12 +20,12 @@ namespace PinetreeChat.WebAPI.Controllers
     public class ChatController : Controller
     {
         private ChatService _chatService;
-        private HubConnection _chatHub;        
+        private IHubContext<ChatHub> _chatHub;
 
-        public override void OnActionExecuting(ActionExecutingContext context)
+        public ChatController(IHubContext<ChatHub> chatHub, ChatService chatService)
         {
-            _chatService = CreateChatService();
-            _chatHub = CreateChatHub();
+            _chatService = chatService;
+            _chatHub = chatHub;
         }
 
         [HttpGet("list")]
@@ -51,7 +52,7 @@ namespace PinetreeChat.WebAPI.Controllers
             try
             {
                 var chat = _chatService.CreateChat(chatDto.Name);
-                _chatHub.InvokeAsync("ChatCreated", new ChatDTO(chat));
+                _chatHub.Clients.All.InvokeAsync("ChatCreated", new ChatDTO(chat));
             }
             catch (ChatExistsException)
             {
@@ -69,7 +70,7 @@ namespace PinetreeChat.WebAPI.Controllers
         public void Post([FromBody]MessageDTO messageDto)
         {
             var message = _chatService.AddMessage(messageDto.ChatName, messageDto.Text, messageDto.From);
-            _chatHub.InvokeAsync("MessageSent", new MessageDTO(messageDto.ChatName, message));
+            _chatHub.Clients.All.InvokeAsync("MessageSent", new MessageDTO(messageDto.ChatName, message));
         }
 
 
@@ -77,23 +78,13 @@ namespace PinetreeChat.WebAPI.Controllers
         public IActionResult Post([FromBody]LeaveDTO leaveDto)
         {
             _chatService.LeaveChat(leaveDto.ChatName, leaveDto.Participant);
-            _chatHub.InvokeAsync("ChatLeft", leaveDto);
+            _chatHub.Clients.All.InvokeAsync("ChatLeft", leaveDto);
             return Ok();
         }
 
         private ChatService CreateChatService()
         {
             return new ChatService(new ChatRepository(), new UserRepository());
-        }
-        private HubConnection CreateChatHub()
-        {
-            return new HubConnectionBuilder().WithUrl(GetHubUrl()).Build();
-        }
-
-        private string GetHubUrl()
-        {
-            var request = HttpContext.Request;
-            return request.Scheme + System.Uri.SchemeDelimiter + request.Host + "/chatHub";
         }
     }
 }

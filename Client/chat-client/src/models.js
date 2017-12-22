@@ -8,6 +8,7 @@ export const State = new Record({
 export const Chat = new Record({
     name: '',
     selected: false,
+    loaded: false,
     participants: List(), // string
     messages: List() // Message
 })

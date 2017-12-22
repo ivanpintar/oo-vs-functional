@@ -1,8 +1,10 @@
-export default function loginReducer(currentUser = '', action) {
+export default function userReducer(currentUser = '', action) {
     switch(action.type) {
-        case 'LOGIN.LOGGED_IN': 
+        case 'USER.LOGGED_IN': 
             return action.username;
-        case 'LOGIN.USER_EXISTS':
+        case 'USER.LOGGED_OUT': 
+            return '';
+        case 'USER.USER_EXISTS':
             alert('Username "' + action.username + '" is taken');
             return currentUser; 
         default:

@@ -14,7 +14,15 @@ export default function chatListReducer(chatList = List(), action) {
         chatList = chatList.map(updateChat);
     }
     
-    switch(action.type) {        
+    switch(action.type) {  
+        case 'CHAT.LIST.LOADED':  
+            return action.chats.map(c => new Chat({
+                name: c.name,
+                selected: false,
+                loaded: false,
+                messages: List(),
+                participants: List(),
+            }))
         case 'CHAT.LIST.CHAT_CREATED': 
             return chatList.push(new Chat({
                 name: action.name,

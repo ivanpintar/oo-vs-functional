@@ -5,9 +5,9 @@ import * as chatListActions from './chatListActions'
 import CreateChat from './CreateChat'
 import { Button, ButtonToolbar } from 'react-bootstrap'
 
-const ChatList = ({chats, createChatAction, selectChatAction}) => {
+const ChatList = ({chats, createChatAction, chatSelectedAction}) => {
 
-    const createChatName = (c) => <Button key={c.name}  onClick={() => selectChatAction(c.name)}>{c.name}</Button>
+    const createChatName = (c) => <Button key={c.name} onClick={() => chatSelectedAction(c.name)}>{c.name}</Button>
     const chatNames = chats.map(createChatName);    
 
     return (
@@ -20,14 +20,7 @@ const ChatList = ({chats, createChatAction, selectChatAction}) => {
     )
 }
 
-function mapStateToProps(state) {
-    return {
-        chats: state.chats
-    }
-}
-
-function mapActionsToProps(dispatch) {
-    return bindActionCreators({ ...chatListActions }, dispatch)
-}
+const mapStateToProps = (state) => ({ chats: state.chats })
+const mapActionsToProps = (dispatch) => bindActionCreators({ ...chatListActions }, dispatch)
 
 export default connect(mapStateToProps, mapActionsToProps)(ChatList)

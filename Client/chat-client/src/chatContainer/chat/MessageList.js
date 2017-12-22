@@ -1,14 +1,12 @@
 import React from 'react'
 import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
-const Message = ({order, from, text}) => {
-    return (
-        <ListGroupItem>
-            <strong>{order} - {from}: </strong>
-            <span>{text}</span>
-        </ListGroupItem>
-    )
-}
+const Message = ({order, from, text}) => (
+    <ListGroupItem>
+        <strong>{order} - {from}: </strong>
+        <span>{text}</span>
+    </ListGroupItem>
+)
 
 export default ({messages}) => {
     if(!messages) return null;

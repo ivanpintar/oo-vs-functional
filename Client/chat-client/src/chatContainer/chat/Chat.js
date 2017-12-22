@@ -21,13 +21,11 @@ const Chat = ({chat, currentUser, sendMessageAction, leaveChatAction}) => {
     )
 }
 
-function mapStateToProps(state) {
-    const chat = state.chats.find((c) => c.selected);
-    return { chat, currentUser: state.currentUser }
-}
+const mapStateToProps = (state) => ({ 
+    chat: state.chats.find((c) => c.selected), 
+    currentUser: state.currentUser 
+})
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ ...chatActions }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({ ...chatActions }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

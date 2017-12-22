@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as loginActions from './loginActions'
+import * as userActions from './userActions'
 import { InputGroup, FormControl, Button } from 'react-bootstrap'
 
 class LoginScreen extends React.Component {
@@ -30,7 +30,12 @@ class LoginScreen extends React.Component {
     }
 
     render() {
-        if(!this.props.visible) return null;
+        if(this.props.currentUser) return (            
+            <div style={{padding: '10px'}}>
+                Logged in as: {this.props.currentUser} - 
+                <span onClick={() => this.props.logoutAction(this.props.currentUser)}>Log Out</span>
+            </div>
+        );
 
         return (
             <div className="well">
@@ -45,14 +50,7 @@ class LoginScreen extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        visible: state.currentUser === ""
-    }
-}
-
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({ ...loginActions }, dispatch);
-}
+const mapStateToProps = (state) => ({ currentUser: state.currentUser })
+const mapDispatchToProps = (dispatch) => bindActionCreators({ ...userActions }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)

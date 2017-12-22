@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace PinetreeChat.Domain.Services
 {
-    public class LoginService
+    public class AccountService
     {
         private IUserRepository _userRepo;
 
-        public LoginService(IUserRepository userRepo)
+        public AccountService(IUserRepository userRepo)
         {
             _userRepo = userRepo;
         }        

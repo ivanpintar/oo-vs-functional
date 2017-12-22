@@ -8,22 +8,22 @@ using PinetreeChat.WebAPI.DTOs;
 
 namespace PinetreeChat.WebAPI.Controllers
 {
-    public class LoginController : Controller
+    [Route("api/[controller]")]
+    public class AccountController : Controller
     {
-        LoginService _loginService;
+        AccountService _accountService;
 
-        public LoginController()
+        public AccountController(AccountService accountService)
         {
-            _loginService = CreateLoginService();
+            _accountService = accountService;
         }        
 
-        [HttpPost]
-        [Route("api/login")]
-        public IActionResult Login([FromBody]LoginDTO loginDto)
+        [HttpPost("login")]
+        public IActionResult Login([FromBody]AccountDTO loginDto)
         {
             try
             {
-                _loginService.LogIn(loginDto.Username);
+                _accountService.LogIn(loginDto.Username);
             }
             catch (UserExistsException)
             {
@@ -37,13 +37,12 @@ namespace PinetreeChat.WebAPI.Controllers
             return Ok();
         }
         
-        [HttpPost]
-        [Route("api/logout")]
-        public IActionResult Logout([FromBody]LoginDTO loginDto)
+        [HttpPost("logout")]
+        public IActionResult Logout([FromBody]AccountDTO loginDto)
         {
             try
             {
-                _loginService.LogOut(loginDto.Username);
+                _accountService.LogOut(loginDto.Username);
             }
             catch (Exception)
             {
@@ -51,11 +50,6 @@ namespace PinetreeChat.WebAPI.Controllers
             }
 
             return Ok();
-        }
-
-        private LoginService CreateLoginService()
-        {
-            return new LoginService(new UserRepository());
         }
     }
 }

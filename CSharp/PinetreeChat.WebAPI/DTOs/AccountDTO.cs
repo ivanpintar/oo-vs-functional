@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PinetreeChat.WebAPI.DTOs
 {
-    public class LoginDTO
+    public class AccountDTO
     {
         public string Username { get; set; }
     }

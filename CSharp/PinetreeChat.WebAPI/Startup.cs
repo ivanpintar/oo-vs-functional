@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using PinetreeChat.DataAccess.Repositories;
+using PinetreeChat.Domain.Services;
+using PinetreeChat.Interfaces.Repositories;
 using PinetreeChat.WebAPI.SignalR;
 
 namespace PinetreeChat.WebAPI
@@ -27,6 +24,11 @@ namespace PinetreeChat.WebAPI
             services.AddCors();
             services.AddMvc();
             services.AddSignalR();
+
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IChatRepository, ChatRepository>();
+            services.AddTransient<AccountService, AccountService>();
+            services.AddTransient<ChatService, ChatService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

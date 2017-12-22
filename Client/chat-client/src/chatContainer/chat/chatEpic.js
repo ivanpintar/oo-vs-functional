@@ -1,16 +1,11 @@
-import { ofType, combineEpics } from 'redux-observable';
-import { delay } from 'rxjs/operators';
-import { ajax } from 'rxjs/observable/dom/ajax';
-import { messageReceivedAction, leftChatAction, leaveChatAction } from './chatActions'
+import { combineEpics } from 'redux-observable';
+import { messageReceivedAction, leftChatAction } from './chatActions'
 
 const sendMessageEpic = (action$, store) => 
-    action$.ofType('CHAT.CHAT.SEND_MESSAGE')
-        .mergeMap(a => {
-            ajax.post('')
-        })
+    action$.ofType('CHAT.CHAT.SEND_MESSAGE')        
         .delay(1000) // TODO: api call to send a message
         .map(a => {
-            const order = store.getState().chats.find(c => c.name == a.chatName).messages.count() + 1;
+            const order = store.getState().chats.find(c => c.name === a.chatName).messages.count() + 1;
             return messageReceivedAction(a.chatName, a.from, a.text, order)
         })
 
