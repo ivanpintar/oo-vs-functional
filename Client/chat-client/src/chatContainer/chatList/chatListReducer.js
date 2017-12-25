@@ -1,5 +1,5 @@
 import { List } from 'immutable'
-import { Chat } from '../../models'
+import { Chat, Message } from '../../models'
 import chatReducer from '../chat/chatReducer'
 
 export default function chatListReducer(chatList = List(), action) {
@@ -17,12 +17,12 @@ export default function chatListReducer(chatList = List(), action) {
     switch(action.type) {  
         case 'CHAT.LIST.LOADED':  
             return List(action.chats.map(c => new Chat({
-                name: c.name,
-                selected: false,
-                loaded: false,
-                messages: List(),
-                participants: List(),
-            })))
+                    name: c.name,
+                    selected: false,
+                    loaded: false,
+                    messages: List(c.messages.map(m => new Message({ order: m.order, text: m.text, from: m.from }))),
+                    participants: List(c.participants),
+                })))
         case 'CHAT.LIST.CHAT_CREATED': 
             return chatList.push(new Chat({
                 name: action.name,

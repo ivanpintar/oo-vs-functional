@@ -49,7 +49,7 @@ namespace PinetreeChat.Domain.Services
                 return null;
             }
 
-            var message = new Message(user, from);
+            var message = new Message(user, text);
             _chatRepo.AddMessage(chat, message);
 
             if (!chat.Participants.Any(p => p.Username == from))

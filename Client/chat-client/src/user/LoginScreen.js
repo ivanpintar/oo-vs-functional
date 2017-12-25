@@ -20,6 +20,7 @@ class LoginScreen extends React.Component {
 
     handleSubmit(event) {
         this.props.loginAction(this.state.value);
+        this.setState({ value: '' });
         event.preventDefault();
     }
 

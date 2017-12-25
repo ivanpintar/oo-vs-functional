@@ -3,7 +3,7 @@ import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
 const Message = ({order, from, text}) => (
     <ListGroupItem>
-        <strong>{order} - {from}: </strong>
+        <strong>{from}: </strong>
         <span>{text}</span>
     </ListGroupItem>
 )

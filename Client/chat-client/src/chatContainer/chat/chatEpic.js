@@ -1,11 +1,13 @@
 import { combineEpics } from 'redux-observable';
-import { messageReceivedAction, leftChatAction, chatLoadedAction } from './chatActions'
+import { leftChatAction, chatLoadedAction } from './chatActions'
 import { Observable } from 'rxjs/Observable'
 import { ajax } from 'rxjs/observable/dom/ajax'
 import constants from '../../constants'
 
 
 const getChatUrl = constants.apiUrl + 'chat/'
+const sendMessageUrl = constants.apiUrl + 'chat/sendMessage'
+const leaveChatUrl = constants.apiUrl + 'chat/leave'
 
 const loadChatEpic = (action$, store) =>
     action$.ofType('CHAT.LIST.CHAT_SELECTED')
@@ -17,17 +19,20 @@ const loadChatEpic = (action$, store) =>
                 .map(chatLoadedAction)
         })
 
-const sendMessageEpic = (action$, store) => 
-    action$.ofType('CHAT.CHAT.SEND_MESSAGE')        
-        .delay(1000) // TODO: api call to send a message
-        .map(a => {
-            const order = store.getState().chats.find(c => c.name === a.chatName).messages.count() + 1;
-            return messageReceivedAction(a.chatName, a.from, a.text, order)
+const sendMessageEpic = (action$) => 
+    action$.ofType('CHAT.CHAT.SEND_MESSAGE')   
+        .mergeMap(a => {
+            const message = { chatName: a.chatName, from: a.from, text: a.text }
+            return ajax.post(sendMessageUrl, message, { 'Content-Type': 'application/json' })
+                .map(response => ({ type: 'VOID' }));                
         })
 
 const leaveChatEpic = (action$) =>
-    action$.ofType('CHAT.CHAT.LEAVE')
-        .delay(1000) // TODO: API call to remove the participant from the chat
-        .map(a => leftChatAction(a.chatName, a.userThatLeft))
+    action$.ofType('CHAT.CHAT.LEAVE')       
+        .mergeMap(a => {
+            const message = { chatName: a.chatName, participant: a.userThatLeft }
+            return ajax.post(leaveChatUrl, message, { 'Content-Type': 'application/json' })
+                .map(response => ({ type: 'VOID' }));           
+        })
 
 export default combineEpics(loadChatEpic, sendMessageEpic, leaveChatEpic)

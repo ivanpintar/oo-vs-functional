@@ -1,17 +1,15 @@
-import { Message, Chat } from '../../models'
+import { Message } from '../../models'
 import { List } from 'immutable'
 
 export default function chatReducer(chat, action) {
     switch(action.type) {
         case "CHAT.CHAT.LOADED": {
             const messages = action.chat.messages.map(m => new Message({ order: m.order, from: m.from, text: m.text }))
-            return new Chat({
-                name: chat.name,
+            return chat.merge({
                 loaded: true,
-                selected: chat.selected,
                 messages: List(messages),
                 participants: List(action.chat.participants)
-            });
+            })
         }
         case "CHAT.CHAT.MESSAGE_RECEIVED": {
             if(!action.text) return chat;
@@ -28,9 +26,8 @@ export default function chatReducer(chat, action) {
             return chat.merge({ messages, participants });
         }
         case "CHAT.CHAT.LEFT": {
-            alert(action.userThatLeft + ' left ' + chat.name)
-            const participants = chat.participants.filter(p => p === action.userThatLeft);
-            return chat.merge({ participants });  
+            const participants = chat.participants.filter(p => p !== action.userThatLeft);
+            return chat.set('participants', participants);  
         }
         default:
             return chat;

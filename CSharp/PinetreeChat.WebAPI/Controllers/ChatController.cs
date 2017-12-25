@@ -67,18 +67,21 @@ namespace PinetreeChat.WebAPI.Controllers
         }
 
         [HttpPost("sendMessage")]
-        public void Post([FromBody]MessageDTO messageDto)
+        public IActionResult SendMessage([FromBody]MessageDTO messageDto)
         {
             var message = _chatService.AddMessage(messageDto.ChatName, messageDto.Text, messageDto.From);
             _chatHub.Clients.All.InvokeAsync("MessageSent", new MessageDTO(messageDto.ChatName, message));
+
+            return Ok();
         }
 
 
         [HttpPost("leave")]
-        public IActionResult Post([FromBody]LeaveDTO leaveDto)
+        public IActionResult LeaveChat([FromBody]LeaveDTO leaveDto)
         {
             _chatService.LeaveChat(leaveDto.ChatName, leaveDto.Participant);
             _chatHub.Clients.All.InvokeAsync("ChatLeft", leaveDto);
+
             return Ok();
         }
 
