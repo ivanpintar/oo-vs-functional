@@ -3,3 +3,4 @@ export const loggedInAction = (username) => ({ type : 'USER.LOGGED_IN', username
 export const logoutAction = (username) => ({ type : 'USER.LOGOUT', username })
 export const loggedOutAction = (username) => ({ type : 'USER.LOGGED_OUT', username })
 export const userExistsAction = (username) => ({ type : 'USER.USER_EXISTS', username })
+export const usernameInvalidAction = () => ({ type : 'USER.USERNAME_INVALID' })

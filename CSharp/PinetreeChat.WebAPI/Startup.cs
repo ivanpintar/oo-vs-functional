@@ -27,7 +27,7 @@ namespace PinetreeChat.WebAPI
 
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IChatRepository, ChatRepository>();
-            services.AddTransient<AccountService, AccountService>();
+            services.AddTransient<UserService, UserService>();
             services.AddTransient<ChatService, ChatService>();
         }
 

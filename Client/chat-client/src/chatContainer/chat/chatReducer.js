@@ -11,6 +11,10 @@ export default function chatReducer(chat, action) {
                 participants: List(action.chat.participants)
             })
         }
+        case "CHAT.CHAT.MESSAGE_INVALID": {
+                alert('Message is invalid');
+                return chat;
+            }
         case "CHAT.CHAT.MESSAGE_RECEIVED": {
             if(!action.text) return chat;
 

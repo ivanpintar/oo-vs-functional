@@ -1,8 +1,9 @@
 import { combineEpics } from 'redux-observable';
-import { leftChatAction, chatLoadedAction } from './chatActions'
+import { chatLoadedAction, messageInvalidAction } from './chatActions'
 import { Observable } from 'rxjs/Observable'
 import { ajax } from 'rxjs/observable/dom/ajax'
 import constants from '../../constants'
+import { serverErrorAction, voidAction } from '../../app/appActions';
 
 
 const getChatUrl = constants.apiUrl + 'chat/'
@@ -17,6 +18,7 @@ const loadChatEpic = (action$, store) =>
 
             return ajax.getJSON(getChatUrl + a.name)
                 .map(chatLoadedAction)
+                .catch(error => Observable.of(serverErrorAction(error)))
         })
 
 const sendMessageEpic = (action$) => 
@@ -24,15 +26,23 @@ const sendMessageEpic = (action$) =>
         .mergeMap(a => {
             const message = { chatName: a.chatName, from: a.from, text: a.text }
             return ajax.post(sendMessageUrl, message, { 'Content-Type': 'application/json' })
-                .map(response => ({ type: 'VOID' }));                
+                .map(response => ({ type: 'VOID' }))
+                .catch(error => {
+                    switch(error.status) {
+                        case 400:
+                            return Observable.of(messageInvalidAction())
+                        default:
+                            return Observable.of(serverErrorAction(error))
+                    }
+                })                
         })
-
+        
 const leaveChatEpic = (action$) =>
     action$.ofType('CHAT.CHAT.LEAVE')       
         .mergeMap(a => {
             const message = { chatName: a.chatName, participant: a.userThatLeft }
             return ajax.post(leaveChatUrl, message, { 'Content-Type': 'application/json' })
-                .map(response => ({ type: 'VOID' }));           
+                .map(voidAction);           
         })
 
 export default combineEpics(loadChatEpic, sendMessageEpic, leaveChatEpic)

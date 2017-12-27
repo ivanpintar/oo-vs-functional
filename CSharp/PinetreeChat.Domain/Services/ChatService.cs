@@ -29,6 +29,11 @@ namespace PinetreeChat.Domain.Services
 
         public Chat CreateChat(string chatName)
         {
+            if(chatName.Length > 50 || string.IsNullOrWhiteSpace(chatName))
+            {
+                throw new ChatNameInvalidException(chatName);
+            }
+
             var chats = _chatRepo.GetChats();
             if (chats.Any(c => c.Name.ToLower() == chatName.ToLower()))
             {
@@ -42,6 +47,11 @@ namespace PinetreeChat.Domain.Services
 
         public Message AddMessage(string chatName, string text, string from)
         {
+            if(text.Length > 150 || string.IsNullOrWhiteSpace(text))
+            {
+                throw new MessageInvalidException();
+            }
+
             var chat = _chatRepo.GetChats().SingleOrDefault(c => c.Name == chatName);
             var user = _userRepo.GetUsers().SingleOrDefault(c => c.Username == from);
             if (chat == null)

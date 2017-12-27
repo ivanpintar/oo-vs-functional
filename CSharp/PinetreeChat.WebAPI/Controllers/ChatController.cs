@@ -33,12 +33,12 @@ namespace PinetreeChat.WebAPI.Controllers
         {
             return _chatService.GetChats().Select(c => new ChatDTO(c)).ToList();
         }
-        
+
         [HttpGet("{chatName}")]
         public IActionResult Get(string chatName)
         {
             var chat = _chatService.GetChat(chatName);
-            if(chat == null)
+            if (chat == null)
             {
                 return NotFound();
             }
@@ -53,26 +53,35 @@ namespace PinetreeChat.WebAPI.Controllers
             {
                 var chat = _chatService.CreateChat(chatDto.Name);
                 _chatHub.Clients.All.InvokeAsync("ChatCreated", new ChatDTO(chat));
+                return Ok();
             }
             catch (ChatExistsException)
             {
                 return new StatusCodeResult(StatusCodes.Status409Conflict);
             }
+            catch (ChatNameInvalidException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception)
             {
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
-
-            return Ok();
         }
 
         [HttpPost("sendMessage")]
         public IActionResult SendMessage([FromBody]MessageDTO messageDto)
         {
-            var message = _chatService.AddMessage(messageDto.ChatName, messageDto.Text, messageDto.From);
-            _chatHub.Clients.All.InvokeAsync("MessageSent", new MessageDTO(messageDto.ChatName, message));
-
-            return Ok();
+            try
+            {
+                var message = _chatService.AddMessage(messageDto.ChatName, messageDto.Text, messageDto.From);
+                _chatHub.Clients.All.InvokeAsync("MessageSent", new MessageDTO(messageDto.ChatName, message));
+                return Ok();
+            }
+            catch (MessageInvalidException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 

@@ -7,6 +7,9 @@ export default function userReducer(currentUser = '', action) {
         case 'USER.USER_EXISTS':
             alert('Username "' + action.username + '" is taken');
             return currentUser; 
+        case 'USER.USERNAME_INVALID':
+            alert('Username is invalid');
+            return currentUser; 
         default:
             return currentUser;
     }

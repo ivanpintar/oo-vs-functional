@@ -9,11 +9,11 @@ using PinetreeChat.WebAPI.DTOs;
 namespace PinetreeChat.WebAPI.Controllers
 {
     [Route("api/[controller]")]
-    public class AccountController : Controller
+    public class UserController : Controller
     {
-        AccountService _accountService;
+        UserService _accountService;
 
-        public AccountController(AccountService accountService)
+        public UserController(UserService accountService)
         {
             _accountService = accountService;
         }        
@@ -24,6 +24,11 @@ namespace PinetreeChat.WebAPI.Controllers
             try
             {
                 _accountService.LogIn(loginDto.Username);
+                return Ok();
+            }
+            catch (UsernameInvalidException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (UserExistsException)
             {
@@ -33,8 +38,6 @@ namespace PinetreeChat.WebAPI.Controllers
             {
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
-
-            return Ok();
         }
         
         [HttpPost("logout")]

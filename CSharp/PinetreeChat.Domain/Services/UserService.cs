@@ -5,17 +5,22 @@ using System.Linq;
 
 namespace PinetreeChat.Domain.Services
 {
-    public class AccountService
+    public class UserService
     {
         private IUserRepository _userRepo;
 
-        public AccountService(IUserRepository userRepo)
+        public UserService(IUserRepository userRepo)
         {
             _userRepo = userRepo;
         }        
 
         public void LogIn(string username)
         {
+            if(username.Length > 100 || string.IsNullOrWhiteSpace(username))
+            {
+                throw new UsernameInvalidException(username);
+            }
+
             var user = _userRepo.GetUsers().SingleOrDefault(u => u.Username.ToLower() == username.ToLower());
             if(user != null && user.IsLoggedIn)
             {
