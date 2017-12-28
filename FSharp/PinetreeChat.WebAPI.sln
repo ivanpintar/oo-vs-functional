@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "PinetreeChat.WebAPI", "PinetreeChat.WebAPI\PinetreeChat.WebAPI.fsproj", "{DCACB468-3BC3-4680-AF9D-27B790954ACA}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PinetreeChat.Entities", "PinetreeChat.Entities\PinetreeChat.Entities.fsproj", "{AC3B3289-AAB6-4483-85C7-987FB460DCA7}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PinetreeChat.DataAccess", "PinetreeChat.DataAccess\PinetreeChat.DataAccess.fsproj", "{F9C0259A-8DF3-45D4-91E0-7B25987712C2}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PinetreeChat.Domain", "PinetreeChat.Domain\PinetreeChat.Domain.fsproj", "{6DA3D1D6-C2AE-46C4-A577-2B60D7DEB6D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{DCACB468-3BC3-4680-AF9D-27B790954ACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCACB468-3BC3-4680-AF9D-27B790954ACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCACB468-3BC3-4680-AF9D-27B790954ACA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC3B3289-AAB6-4483-85C7-987FB460DCA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC3B3289-AAB6-4483-85C7-987FB460DCA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC3B3289-AAB6-4483-85C7-987FB460DCA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC3B3289-AAB6-4483-85C7-987FB460DCA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9C0259A-8DF3-45D4-91E0-7B25987712C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9C0259A-8DF3-45D4-91E0-7B25987712C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9C0259A-8DF3-45D4-91E0-7B25987712C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9C0259A-8DF3-45D4-91E0-7B25987712C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DA3D1D6-C2AE-46C4-A577-2B60D7DEB6D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DA3D1D6-C2AE-46C4-A577-2B60D7DEB6D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DA3D1D6-C2AE-46C4-A577-2B60D7DEB6D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DA3D1D6-C2AE-46C4-A577-2B60D7DEB6D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
