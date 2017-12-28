@@ -1,4 +1,4 @@
 export default {
-    chatHubUrl: 'http://localhost:63081/chatHub',
-    apiUrl: 'http://localhost:63081/api/'
+    chatHubUrl: 'http://localhost:666/PinetreeChat.CSharpAPI/chatHub',
+    apiUrl: 'http://localhost:666/PinetreeChat.CSharpAPI/api/'
 }

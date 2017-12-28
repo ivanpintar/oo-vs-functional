@@ -46,6 +46,7 @@ namespace PinetreeChat.WebAPI
                     .AllowAnyMethod()
                     .AllowAnyOrigin();
             });
+            app.UsePathBase("/PinetreeChat.CSharpAPI");
             app.UseMvc();
             app.UseSignalR(routes => routes.MapHub<ChatHub>("chatHub"));
         }

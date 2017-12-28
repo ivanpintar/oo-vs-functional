@@ -14,10 +14,10 @@ const loadChatEpic = (action$, store) =>
     action$.ofType('CHAT.LIST.CHAT_SELECTED')
         .mergeMap(a => {
             const chat = store.getState().chats.find(c => c.name === a.name)
-            if(chat.isLoaded) return Observable.of({ type: 'VOID' })
+            if(chat.loaded) return Observable.of({ type: 'VOID' })
 
             return ajax.getJSON(getChatUrl + a.name)
-                .map(chatLoadedAction)
+                .map(response => chatLoadedAction(a.name, response))
                 .catch(error => Observable.of(serverErrorAction(error)))
         })
 
@@ -30,13 +30,13 @@ const sendMessageEpic = (action$) =>
                 .catch(error => {
                     switch(error.status) {
                         case 400:
-                            return Observable.of(messageInvalidAction())
+                            return Observable.of(messageInvalidAction(a.chatName))
                         default:
                             return Observable.of(serverErrorAction(error))
                     }
                 })                
         })
-        
+
 const leaveChatEpic = (action$) =>
     action$.ofType('CHAT.CHAT.LEAVE')       
         .mergeMap(a => {
