@@ -19,7 +19,7 @@ namespace PinetreeChat.WebAPI.Controllers
         }        
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody]AccountDTO loginDto)
+        public IActionResult Login([FromBody]UserDTO loginDto)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace PinetreeChat.WebAPI.Controllers
         }
         
         [HttpPost("logout")]
-        public IActionResult Logout([FromBody]AccountDTO loginDto)
+        public IActionResult Logout([FromBody]UserDTO loginDto)
         {
             try
             {

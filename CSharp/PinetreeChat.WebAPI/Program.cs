@@ -21,7 +21,6 @@ namespace PinetreeChat.WebAPI
             WebHost.CreateDefaultBuilder(args)
                 .UseKestrel()
                 .UseUrls("http://localhost:666/")
-                .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();

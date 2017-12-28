@@ -20,16 +20,16 @@ namespace PinetreeChat.WebAPI.Controllers
     public class ChatController : Controller
     {
         private ChatService _chatService;
-        private IHubContext<ChatHub> _chatHub;
+        private ChatHubHelper _chatHub;
 
         public ChatController(IHubContext<ChatHub> chatHub, ChatService chatService)
         {
             _chatService = chatService;
-            _chatHub = chatHub;
+            _chatHub = new ChatHubHelper(chatHub);
         }
 
         [HttpGet("list")]
-        public IEnumerable<ChatDTO> Get()
+        public IEnumerable<ChatDTO> List()
         {
             return _chatService.GetChats().Select(c => new ChatDTO(c)).ToList();
         }
@@ -47,12 +47,12 @@ namespace PinetreeChat.WebAPI.Controllers
         }
 
         [HttpPost("create")]
-        public IActionResult Post([FromBody]ChatDTO chatDto)
+        public IActionResult Create([FromBody]ChatDTO chatDto)
         {
             try
             {
                 var chat = _chatService.CreateChat(chatDto.Name);
-                _chatHub.Clients.All.InvokeAsync("ChatCreated", new ChatDTO(chat));
+                _chatHub.ChatCreated(new ChatDTO(chat));
                 return Ok();
             }
             catch (ChatExistsException)
@@ -75,7 +75,7 @@ namespace PinetreeChat.WebAPI.Controllers
             try
             {
                 var message = _chatService.AddMessage(messageDto.ChatName, messageDto.Text, messageDto.From);
-                _chatHub.Clients.All.InvokeAsync("MessageSent", new MessageDTO(messageDto.ChatName, message));
+                _chatHub.MessageSent(new MessageDTO(messageDto.ChatName, message));
                 return Ok();
             }
             catch (MessageInvalidException ex)
@@ -84,12 +84,11 @@ namespace PinetreeChat.WebAPI.Controllers
             }
         }
 
-
         [HttpPost("leave")]
         public IActionResult LeaveChat([FromBody]LeaveDTO leaveDto)
         {
             _chatService.LeaveChat(leaveDto.ChatName, leaveDto.Participant);
-            _chatHub.Clients.All.InvokeAsync("ChatLeft", leaveDto);
+            _chatHub.ChatLeft(leaveDto);
 
             return Ok();
         }

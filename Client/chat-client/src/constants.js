@@ -1,4 +1,7 @@
+const cSharpPort = 666 
+const fSharpPort = 777
+
 export default {
-    chatHubUrl: 'http://localhost:666/PinetreeChat.CSharpAPI/chatHub',
-    apiUrl: 'http://localhost:666/PinetreeChat.CSharpAPI/api/'
+    chatHubUrl: 'http://localhost:'+cSharpPort+'/chatHub',
+    apiUrl: 'http://localhost:'+cSharpPort+'/api/'
 }

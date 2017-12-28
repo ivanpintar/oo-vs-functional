@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "PinetreeChat.WebAPI", "PinetreeChat.WebAPI\PinetreeChat.WebAPI.fsproj", "{DCACB468-3BC3-4680-AF9D-27B790954ACA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCACB468-3BC3-4680-AF9D-27B790954ACA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCACB468-3BC3-4680-AF9D-27B790954ACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCACB468-3BC3-4680-AF9D-27B790954ACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCACB468-3BC3-4680-AF9D-27B790954ACA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A2F88C77-2873-4BD1-8358-17A72CDC4390}
+	EndGlobalSection
+EndGlobal
