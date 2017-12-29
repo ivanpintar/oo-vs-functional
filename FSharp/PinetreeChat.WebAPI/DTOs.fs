@@ -1,6 +1,9 @@
 ﻿namespace PinetreeChat.WebAPI
 
 module DTOs =
+    open Giraffe
+    open Microsoft.AspNetCore.Http
+
     [<CLIMutable>]
     type UserDTO = { Username: string }
 
@@ -18,3 +21,6 @@ module DTOs =
     type ChatDTO = { Name : string
                      Participants : string list
                      Messages : MessageDTO list }
+
+    let getDto<'TDto> (ctx:HttpContext) =  ctx.BindJsonAsync<'TDto>()
+        

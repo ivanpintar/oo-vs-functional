@@ -5,24 +5,28 @@ module UserRepository =
 
     let mutable private userList = List.empty<User>
     
-    let private updateUserInList username updateFunction =
+    let private updateUserInList updateFunction username =
         let mappingFunction user = 
             if (user.Username = username)
             then updateFunction user
             else user           
             
-        List.map mappingFunction userList
+        userList <- List.map mappingFunction userList
+        List.find (fun u -> u.Username = username) userList
 
     let getUsers () =
         userList 
 
+    let getUser username =
+        try List.find (fun u -> u.Username = username) userList |> Some
+        with _ -> None
+
     let addUser (user:User) =
         userList <- user :: userList
+        user
 
-    let setLoggedIn username =
-        let updateFunction user = { user with IsLoggedIn = true }
-        userList <- updateUserInList username updateFunction
+    let setLoggedIn =
+        updateUserInList (fun u -> { u with IsLoggedIn = true })
 
-    let setLoggedOut username =
-        let updateFunction user = { user with IsLoggedIn = false }
-        userList <- updateUserInList username updateFunction
+    let setLoggedOut =
+        updateUserInList (fun u -> { u with IsLoggedIn = false })

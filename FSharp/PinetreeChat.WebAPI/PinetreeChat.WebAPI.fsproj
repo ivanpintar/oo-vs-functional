@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Chessie" Version="0.6.0" />
     <PackageReference Include="Giraffe" Version="0.1.0-beta-700" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.0.1" />
@@ -27,6 +28,11 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.*" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PinetreeChat.Domain\PinetreeChat.Domain.fsproj" />
+    <ProjectReference Include="..\PinetreeChat.Entities\PinetreeChat.Entities.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

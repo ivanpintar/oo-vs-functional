@@ -5,7 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Validation.fs" />
     <Compile Include="UserService.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Chessie" Version="0.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PinetreeChat.DataAccess\PinetreeChat.DataAccess.fsproj" />
+    <ProjectReference Include="..\PinetreeChat.Entities\PinetreeChat.Entities.fsproj" />
   </ItemGroup>
 
 </Project>
