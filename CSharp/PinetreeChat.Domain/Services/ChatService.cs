@@ -49,7 +49,7 @@ namespace PinetreeChat.Domain.Services
         {
             if(text.Length > 150 || string.IsNullOrWhiteSpace(text))
             {
-                throw new MessageInvalidException();
+                throw new MessageInvalidException(text);
             }
 
             var chat = _chatRepo.GetChats().SingleOrDefault(c => c.Name == chatName);

@@ -55,17 +55,20 @@ namespace PinetreeChat.WebAPI.Controllers
                 _chatHub.ChatCreated(new ChatDTO(chat));
                 return Ok();
             }
-            catch (ChatExistsException)
+            catch (ChatExistsException ex)
             {
-                return new StatusCodeResult(StatusCodes.Status409Conflict);
+                Response.StatusCode = 409;
+                return Json(ex.Message);
             }
             catch (ChatNameInvalidException ex)
             {
-                return BadRequest(ex.Message);
+                Response.StatusCode = 400;
+                return Json(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                Response.StatusCode = 500;
+                return Json(ex.Message);
             }
         }
 
@@ -80,7 +83,8 @@ namespace PinetreeChat.WebAPI.Controllers
             }
             catch (MessageInvalidException ex)
             {
-                return BadRequest(ex.Message);
+                Response.StatusCode = 400;
+                return Json(ex.Message);
             }
         }
 

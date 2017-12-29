@@ -3,4 +3,3 @@ export const messageReceivedAction = (chatName, from, text, order) => ({ type: '
 export const leaveChatAction = (chatName, userThatLeft) => ({ type: 'CHAT.CHAT.LEAVE', chatName, userThatLeft })
 export const leftChatAction = (chatName, userThatLeft) => ({ type: 'CHAT.CHAT.LEFT', chatName, userThatLeft })
 export const chatLoadedAction = (chatName, chat) => ({ type: 'CHAT.CHAT.LOADED', chatName, chat })
-export const messageInvalidAction = (chatName) => ({ type: 'CHAT.CHAT.MESSAGE_INVALID', chatName })

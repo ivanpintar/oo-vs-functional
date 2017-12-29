@@ -4,4 +4,3 @@ export const createChatAction = (name) => createAction('CHAT.LIST.CREATE_CHAT', 
 export const chatCreatedAction = (name) => createAction('CHAT.LIST.CHAT_CREATED', name)
 export const chatExistsAction = (name) => createAction('CHAT.LIST.CHAT_EXISTS', name)
 export const chatSelectedAction = (name) => createAction('CHAT.LIST.CHAT_SELECTED', name)
-export const chatNameInvalidAction = () => ({ type: 'CHAT.LIST.CHAT_NAME_INVALID' })

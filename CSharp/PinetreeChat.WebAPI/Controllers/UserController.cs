@@ -28,15 +28,18 @@ namespace PinetreeChat.WebAPI.Controllers
             }
             catch (UsernameInvalidException ex)
             {
-                return BadRequest(ex.Message);
+                Response.StatusCode = 400;
+                return Json(ex.Message);
             }
-            catch (UserExistsException)
+            catch (UserExistsException ex)
             {
-                return new StatusCodeResult(StatusCodes.Status409Conflict);
+                Response.StatusCode = 409;
+                return Json(ex.Message);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                Response.StatusCode = 500;
+                return Json(ex.Message);
             }
         }
         
@@ -47,9 +50,10 @@ namespace PinetreeChat.WebAPI.Controllers
             {
                 _accountService.LogOut(loginDto.Username);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                Response.StatusCode = 500;
+                return Json(ex.Message);
             }
 
             return Ok();

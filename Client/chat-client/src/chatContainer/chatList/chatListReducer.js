@@ -31,12 +31,6 @@ export default function chatListReducer(chatList = List(), action) {
                 messages: List(),
                 participants: List(),
             }));
-        case 'CHAT.LIST.CHAT_EXISTS':
-            alert('Chat "' + action.name + '" already exists');
-            return chatList;
-        case 'CHAT.LIST.CHAT_NAME_INVALID': 
-            alert('Chat name is invalid');
-            return chatList;
         case 'CHAT.LIST.CHAT_SELECTED':
             return chatList.map(c => {
                 if(c.name === action.name){

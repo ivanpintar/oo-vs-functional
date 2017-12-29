@@ -6,7 +6,7 @@ import { State } from '../models'
 const errorReducer = (error = '', action) => {
     switch(action.type) {
         case 'SERVER_ERROR':
-            alert('Server error: ' + action.error.status + ' - ' + action.error.message);
+            alert('Server error: ' + action.error.status + ' - ' + action.error.response);
             return error;
         default: 
             return error;
