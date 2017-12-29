@@ -21,7 +21,7 @@ module UserRepository =
         try List.find (fun u -> u.Username = username) userList |> Some
         with _ -> None
 
-    let addUser (user:User) =
+    let addUser user =
         userList <- user :: userList
         user
 

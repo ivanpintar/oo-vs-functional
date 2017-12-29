@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Include="Validation.fs" />
+    <Compile Include="ChatService.fs" />
     <Compile Include="UserService.fs" />
   </ItemGroup>
 

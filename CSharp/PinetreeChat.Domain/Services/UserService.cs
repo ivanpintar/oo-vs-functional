@@ -16,7 +16,7 @@ namespace PinetreeChat.Domain.Services
 
         public void LogIn(string username)
         {
-            if(username.Length > 100 || string.IsNullOrWhiteSpace(username))
+            if(username.Length > 20 || string.IsNullOrWhiteSpace(username))
             {
                 throw new UsernameInvalidException(username);
             }

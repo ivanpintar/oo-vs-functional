@@ -14,17 +14,17 @@ module UserService =
         | UserLoggedIn msg -> msg
         | UsernameInvalid msg -> msg
 
-    let login getUserFunction addUserFunction setLoggedInFunction username =
+    let login findUserFunction addUserFunction setLoggedInFunction username =
         let notEmpty = validateEmptyString (UsernameInvalid "Username is empty")
-        let lengthValid = validateStringLength 1 100 (UsernameInvalid "Username has wrong length") 
+        let lengthValid = validateStringLength 1 20 (UsernameInvalid "Username is too long") 
 
-        let validationResult un = notEmpty un <* lengthValid un  
+        let validateUsername un = notEmpty un <* lengthValid un  
         
         let loginUser un =
-            match getUserFunction un with
+            match findUserFunction un with
             | Some user -> 
                 match user.IsLoggedIn with
-                | true -> Bad [ (UserLoggedIn "User is already logged in") ]
+                | true -> Bad [ (UserLoggedIn "User with that username is already logged in") ]
                 | false -> 
                     setLoggedInFunction username |> ok
             | None ->
@@ -32,10 +32,10 @@ module UserService =
                 |> addUserFunction
                 |> ok
 
-        username |> validationResult >>= loginUser
+        username |> validateUsername >>= loginUser
 
-    let logout getUserFunction setLoggedOutFunction username =
-        match getUserFunction username with 
+    let logout findUserFunction setLoggedOutFunction username =
+        match findUserFunction username with 
         | Some _ -> 
             setLoggedOutFunction username
             |> ok 

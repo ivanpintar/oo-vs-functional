@@ -4,15 +4,13 @@
 module UserAPI =
     open Giraffe
     open DTOs
-    open Microsoft.AspNetCore.Http
     open PinetreeChat.Domain.UserService
     open PinetreeChat.Domain.UserServiceWithDataAccess
     open Chessie.ErrorHandling
-    open System
 
     let processServiceResult (result:Result<_, UserErrorMessage>)  =
         match result with
-        | Ok (r, _) -> setStatusCode 200
+        | Ok _ -> setStatusCode 200
         | Bad errors -> 
             let message = errors |> List.map getErrorMessage |> String.concat ", "
             let checkError =
@@ -41,6 +39,7 @@ module UserAPI =
                 userDto.Username
                 |> logout
                 |> processServiceResult
+
             return! logOutUserResult next ctx
         }
 
