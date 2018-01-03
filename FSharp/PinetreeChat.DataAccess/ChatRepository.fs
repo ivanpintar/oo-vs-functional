@@ -14,11 +14,13 @@ module ChatRepository =
         chatList <- List.map mappingFunction chatList
         List.find (fun u -> u.Name = name) chatList
 
+    let private findChatInList name = List.find (fun u -> u.Name = name) chatList
+
     let getChats () =
         chatList 
 
     let getChat name =
-        try List.find (fun u -> u.Name = name) chatList |> Some
+        try findChatInList name |> Some
         with _ -> None
 
     let addChat chat =
@@ -26,20 +28,25 @@ module ChatRepository =
         chat
 
     let addMessage chatName message =
-        let addMessageFunction chat = 
-            let newMessage = { message with Order = List.length chat.Messages }
-            let newMessages = chat.Messages @ [ newMessage ]
-            { chat with Messages = newMessages }
-        updateChatInList addMessageFunction chatName
+        let chatMessageCount = 
+            findChatInList chatName 
+            |> fun (c) -> c.Messages.Length
+        let newMessage = { message with Order = chatMessageCount }
+        let addMessageFunction c = 
+            let newMessages = c.Messages @ [ newMessage ]
+            { c with Messages = newMessages }
+        let chat = updateChatInList addMessageFunction chatName
+        (chat, newMessage)
 
     let addParticipant chatName user = 
         let addParticipantFunction chat =
             let newParticipants = chat.Participants @ [ user ]
             { chat with Participants = newParticipants }
-        updateChatInList addParticipantFunction chatName
+        let chat = updateChatInList addParticipantFunction chatName
+        (chat, user)
 
-    let removeParticipant chatName user =  
+    let removeParticipant chatName username =  
         let addParticipantFunction chat =
-            let newParticipants = List.filter (fun p -> p.Username <> user.Username) chat.Participants
+            let newParticipants = List.filter (fun p -> p.Username <> username) chat.Participants
             { chat with Participants = newParticipants }
         updateChatInList addParticipantFunction chatName

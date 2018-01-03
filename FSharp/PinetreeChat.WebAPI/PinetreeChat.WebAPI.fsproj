@@ -7,8 +7,8 @@
 
   <ItemGroup>
     <Compile Include="DTOs.fs" />
-    <Compile Include="ChatAPI.fs" />
     <Compile Include="SignalR.fs" />
+    <Compile Include="ChatAPI.fs" />
     <Compile Include="UserAPI.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

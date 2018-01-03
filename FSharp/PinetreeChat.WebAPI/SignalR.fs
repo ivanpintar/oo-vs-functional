@@ -2,14 +2,16 @@
  
 module SignalR = 
     open Microsoft.AspNetCore.SignalR
+    open Microsoft.AspNetCore.Http
 
     type ChatHub() = inherit Hub()
 
-    let invokeAllClients (chatHubContext:IHubContext<ChatHub>) method payload = 
+    let invokeAllClients (ctx:HttpContext) method (payload:obj) = 
+        let chatHubContext = ctx.RequestServices.GetService(typeof<IHubContext<ChatHub>>) :?> IHubContext<ChatHub>
         chatHubContext.Clients.All.InvokeAsync(method, payload)
 
-    let chatCreated (chatHubContext:IHubContext<ChatHub>) = invokeAllClients chatHubContext "ChatCreated"        
-    let messageSent (chatHubContext:IHubContext<ChatHub>) = invokeAllClients chatHubContext "MessageSent"         
-    let chatLeft (chatHubContext:IHubContext<ChatHub>) = invokeAllClients chatHubContext "ChatLeft" 
+    let chatCreated ctx = invokeAllClients ctx "ChatCreated"        
+    let messageSent ctx = invokeAllClients ctx "MessageSent"         
+    let chatLeft ctx = invokeAllClients ctx "ChatLeft" 
 
 

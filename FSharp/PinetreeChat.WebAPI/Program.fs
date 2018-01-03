@@ -33,7 +33,7 @@ module WebApi =
             |> ignore
 
     let configureApp (app : IApplicationBuilder) =
-        app.UseCors(configureCors)
+        app.UseCors(configureCors)            
            .UsePathBase(new PathString("/PinetreeChat.FSharpAPI"))
            .UseSignalR(fun(r) -> r.MapHub<ChatHub>("chatHub"))
            .UseGiraffeErrorHandler(errorHandler)
