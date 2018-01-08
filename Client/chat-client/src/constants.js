@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const cSharpPort = 666
 const fSharpPort = 777
 

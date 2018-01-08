@@ -5,7 +5,6 @@ import rootEpic from './app/appEpic'
 import { State } from './models' 
 import { List } from 'immutable'
 import { createEpicMiddleware } from 'redux-observable'
-import 'rxjs';
 
 const initialState = new State({
     currentUser: '',

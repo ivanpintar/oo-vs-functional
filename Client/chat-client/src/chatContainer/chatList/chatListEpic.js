@@ -3,6 +3,7 @@ import { chatsLoadedAction } from './chatListActions'
 import constants from '../../constants'
 import { Observable } from 'rxjs/Observable'
 import { ajax } from 'rxjs/observable/dom/ajax'
+import { mergeMap } from 'rxjs' // eslint-disable-line
 import { serverErrorAction } from '../../app/appActions';
 
 const createChatUrl = constants.apiUrl + 'chat/create'

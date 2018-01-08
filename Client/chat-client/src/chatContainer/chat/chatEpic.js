@@ -1,7 +1,9 @@
+
 import { combineEpics } from 'redux-observable';
 import { chatLoadedAction } from './chatActions'
 import { Observable } from 'rxjs/Observable'
 import { ajax } from 'rxjs/observable/dom/ajax'
+import { mergeMap } from 'rxjs' // eslint-disable-line
 import constants from '../../constants'
 import { serverErrorAction, voidAction } from '../../app/appActions';
 
